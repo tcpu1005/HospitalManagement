@@ -1,0 +1,86 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <!-- Add your CSS styling here -->
+  </head>
+  <body>
+    <h1>Admin Dashboard</h1>
+    <h2>Manage Staff</h2>
+
+    <!-- Add Staff Member -->
+    <h3>Add Staff Member</h3>
+    <form action="/admin/add" method="post">
+      <!-- Form fields for adding staff -->
+      <input type="text" name="Name" placeholder="Name" required />
+      <input
+        type="number"
+        name="DepartmentId"
+        placeholder="DepartmentId"
+        required
+      />
+      <input type="text" name="Address" placeholder="Address" required />
+      <input
+        type="text"
+        name="PhoneNumber"
+        placeholder="PhoneNumber"
+        required
+      />
+      <input type="text" name="Username" placeholder="USERID" required />
+      <input type="text" name="Password" placeholder="Password" required />
+      <select name="role">
+        <option value="DOCTOR">DOCTOR</option>
+        <option value="NURSE">NURSE</option>
+      </select>
+      <!-- Additional fields as needed -->
+      <button type="submit">Add Staff</button>
+    </form>
+
+    <!-- List of Doctors -->
+    <h3>Doctors DELETE</h3>
+    {{#each doctors}}
+      <p>{{this.Name}}
+        -
+        {{this.DepartmentID}}
+
+        <a href="/admin/delete/{{this.DoctorID}}?role=DOCTOR">Delete</a>
+      </p>
+    {{/each}}
+    <h3>Doctors EDIT</h3>
+    {{#each doctors}}
+      <form action="/admin/update/{{this.DoctorID}}?role=DOCTOR" method="post">
+        <input type="hidden" name="role" value="DOCTOR" />
+        <input type="hidden" name="DoctorID" value="{{this.DoctorID}}" />
+        <input type="text" name="Name" value="{{this.Name}}" />
+        <input type="text" name="Address" value="{{this.Address}}" />
+        <input type="text" name="PhoneNumber" value="{{this.PhoneNumber}}" />
+        <button type="submit">Edit</button>
+      </form>
+    {{/each}}
+    <!-- List of Nurses -->
+    <h3>Nurses DELETE</h3>
+    {{#each nurses}}
+      <p>{{this.Name}}
+        -
+        {{this.DepartmentID}}
+
+        <a href="/admin/delete/{{this.NurseID}}?role=NURSE">Delete</a>
+      </p>
+    {{/each}}
+    <h3>Nurses EDIT</h3>
+    {{#each nurses}}
+      <form action="/admin/update/{{this.NurseID}}?role=NURSE" method="post">
+        <input type="hidden" name="role" value="NURSE" />
+        <input type="hidden" name="NurseID" value="{{this.NurseID}}" />
+        <input type="text" name="Name" value="{{this.Name}}" />
+        <input type="text" name="Address" value="{{this.Address}}" />
+        <input type="text" name="PhoneNumber" value="{{this.PhoneNumber}}" />
+        <button type="submit">Edit</button>
+      </form>
+    {{/each}}
+
+    <!-- Include your JavaScript here -->
+
+  </body>
+</html>

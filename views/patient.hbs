@@ -1,0 +1,109 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Dashboard</title>
+    <!-- Add your CSS styling here -->
+  </head>
+  <body>
+    <h1>Patient Dashboard</h1>
+
+    <!-- Existing Reservations -->
+    <h2>Your Reservations</h2>
+    {{#each reservations}}
+      <div>
+        <p>Reservation ID: {{this.ReservationNumber}}</p>
+        <p>Date/Time: {{this.ReservationDateTime}}</p>
+        <p>Department ID: {{this.DepartmentID}}</p>
+        <!-- Add other details as needed -->
+        <form action="/patient/cancel/{{this.ReservationNumber}}" method="post">
+          <button type="submit">Cancel Reservation</button>
+        </form>
+      </div>
+    {{/each}}
+
+    {{!-- <!-- Make a New Reservation -->
+    <h3>Make a New Reservation</h3>
+    <form action="/patient/reserve" method="post">
+      <label for="ReservationDateTime">Reservation Date and Time:</label>
+      <input
+        type="datetime-local"
+        id="ReservationDateTime"
+        name="ReservationDateTime"
+        required
+      />
+
+      <label for="DepartmentID">Department:</label>
+      <input
+        type="number"
+        id="DepartmentID"
+        name="DepartmentID"
+        required
+        placeholder="Enter Department ID"
+      />
+
+      <!-- Assuming PatientID is passed from the server and should not be changed by the patient -->
+      <input type="hidden" name="PatientID" value="{{patientId}}" />
+
+      <button type="submit">Reserve</button>
+    </form> --}}
+    <h2>Department you want to reserve</h2>
+    <table>
+      <tr>
+        <th>Department ID</th>
+        <th>Department Name</th>
+        <th>Phone Number</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Cardiology</td>
+        <td>886-874-6319</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Neurology</td>
+        <td>001-108-153-7731</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Pediatrics</td>
+        <td>001-680-008-7640</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Oncology</td>
+        <td>6291608259</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Orthopedics</td>
+        <td>3701122628</td>
+      </tr>
+    </table>
+    <h3>Transaction test Make Reservation</h3>
+    <form action="/patient/reserve" method="post">
+      <div>
+        <label for="ReservationDateTime">Reservation Date and Time:</label>
+        <input
+          type="datetime-local"
+          id="ReservationDateTime"
+          name="ReservationDateTime"
+          required
+        />
+      </div>
+      <div>
+        <label for="DepartmentID">Department:</label>
+        <input
+          type="number"
+          id="DepartmentID"
+          name="DepartmentID"
+          required
+          placeholder="Enter Department ID"
+        />
+      </div>
+      <label for="DepartmentID">Your patient ID:</label>
+      <input type="number" name="PatientID" value="{{patientId}}" />
+      <button type="submit">Reserve</button>
+    </form>
+  </body>
+</html>

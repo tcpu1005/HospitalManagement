@@ -1,0 +1,107 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Dashboard</title>
+    <!-- Add your CSS styling here -->
+  </head>
+  <body>
+    <h1>Doctor Dashboard</h1>
+    <!-- Add Examination -->
+    <h3>Add EXAMINATION</h3>
+    <form action="/doctor/add" method="post">
+      <!-- Form fields for adding examination -->
+      <input type="datetime-local" name="ExaminationDateTime" required />
+      <textarea
+        name="ExaminationDetails"
+        placeholder="Examination Details"
+        required
+      ></textarea>
+      <input
+        type="number"
+        name="DoctorID"
+        placeholder="Doctor ID"
+        value="{{doctorId}}"
+      />
+      <!-- Assuming doctorId is passed from the server -->
+      <input type="number" name="PatientID" placeholder="Patient ID" required />
+      <button type="submit">Add EXAMINATION</button>
+    </form>
+    <h3>Search Patients</h3>
+    <form action="/doctor" method="get">
+      <input
+        type="text"
+        name="searchQuery"
+        placeholder="Enter patient name or ID"
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Display Search Results -->
+    {{#if searchResults}}
+      <h2>Search Results</h2>
+      <table>
+        <tr>
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Social Security Number</th>
+          <th>Gender</th>
+          <th>Address</th>
+          <th>Blood Type</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>Phone Number</th>
+        </tr>
+        {{#each searchResults}}
+          <tr>
+            <td>{{this.PatientID}}</td>
+            <td>{{this.Name}}</td>
+            <td>{{this.SocialSecurityNumber}}</td>
+            <td>{{this.Gender}}</td>
+            <td>{{this.Address}}</td>
+            <td>{{this.BloodType}}</td>
+            <td>{{this.Height}}</td>
+            <td>{{this.Weight}}</td>
+            <td>{{this.PhoneNumber}}</td>
+          </tr>
+        {{/each}}
+      </table>
+    {{else}}
+      <p>No search results found.</p>
+    {{/if}}
+
+    <!-- Examination List for Deletion -->
+    <h3>EXAMINATION DELETE</h3>
+    {{#each examinations}}
+      <p>
+        Examination ID:
+        {{this.ExaminationID}}
+        <a href="/doctor/delete/{{this.ExaminationID}}">Delete</a>
+      </p>
+    {{/each}}
+
+    <!-- Examination List for Editing -->
+    <h3>Edit EXAMINATION</h3>
+    {{#each examinations}}
+      <form action="/doctor/update/{{this.ExaminationID}}" method="post">
+        Examination ID:
+        {{this.ExaminationID}}
+
+        <input
+          type="datetime-local"
+          name="ExaminationDateTime"
+          value="{{this.ExaminationDateTime}}"
+        />
+        <textarea
+          name="ExaminationDetails"
+        >{{this.ExaminationDetails}}</textarea>
+        <input type="number" name="DoctorID" value="{{this.DoctorID}}" />
+        <input type="number" name="PatientID" value="{{this.PatientID}}" />
+        <button type="submit">Edit</button>
+      </form>
+
+    {{/each}}
+
+  </body>
+</html>

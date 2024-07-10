@@ -1,0 +1,102 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nurse Dashboard</title>
+    <!-- Add your CSS styling here -->
+  </head>
+  <body>
+    <h1>Nurse Dashboard</h1>
+    <!-- Patient Search Form -->
+    <h3>Search Patients</h3>
+    <form action="/nurse" method="get">
+      <input
+        type="text"
+        name="searchQuery"
+        placeholder="Enter patient name or ID"
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+    <!-- Search Results -->
+    <h3>Search Results</h3>
+    {{#if searchResults}}
+      <table>
+        <tr>
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Social Security Number</th>
+          <th>Gender</th>
+          <th>Address</th>
+          <th>Blood Type</th>
+          <th>Height</th>
+          <th>Weight</th>
+          <th>Phone Number</th>
+        </tr>
+        {{#each searchResults}}
+          <tr>
+            <td>{{this.PatientID}}</td>
+            <td>{{this.Name}}</td>
+            <td>{{this.SocialSecurityNumber}}</td>
+            <td>{{this.Gender}}</td>
+            <td>{{this.Address}}</td>
+            <td>{{this.BloodType}}</td>
+            <td>{{this.Height}}</td>
+            <td>{{this.Weight}}</td>
+            <td>{{this.PhoneNumber}}</td>
+          </tr>
+        {{/each}}
+      </table>
+    {{else}}
+      {{#if searchQuery}}
+        <p>No search results found for "{{searchQuery}}".</p>
+      {{else}}
+        <p>Enter search criteria to find patients.</p>
+      {{/if}}
+    {{/if}}
+    <!-- Add Treatment -->
+    <h3>Add TREATMENT</h3>
+    <form action="/nurse/add" method="post">
+      <!-- Form fields for adding treatment -->
+      <input type="datetime-local" name="TreatmentDateTime" required />
+      <textarea
+        name="TreatmentDetails"
+        placeholder="Treatment Details"
+        required
+      ></textarea>
+      <input type="number" name="NurseID" value="{{nurseId}}" />
+      <!-- Assuming nurseId is passed from the server -->
+      <input type="number" name="PatientID" placeholder="Patient ID" required />
+      <button type="submit">Add TREATMENT</button>
+    </form>
+
+    <!-- Treatment List for Deletion -->
+    <h3>TREATMENT DELETE</h3>
+    {{#each treatments}}
+      <p>
+        Treatment ID:
+        {{this.TreatmentID}}
+        <a href="/nurse/delete/{{this.TreatmentID}}">Delete</a>
+      </p>
+    {{/each}}
+
+    <!-- Treatment List for Editing -->
+    <h3>Edit TREATMENT</h3>
+    {{#each treatments}}
+      <form action="/nurse/update/{{this.TreatmentID}}" method="post">
+        Treatment ID:
+        {{this.TreatmentID}}
+        <input
+          type="datetime-local"
+          name="TreatmentDateTime"
+          value="{{this.TreatmentDateTime}}"
+        />
+        <textarea name="TreatmentDetails">{{this.TreatmentDetails}}</textarea>
+        <input type="number" name="NurseID" value="{{this.NurseID}}" />
+        <input type="number" name="PatientID" value="{{this.PatientID}}" />
+        <button type="submit">Edit</button>
+      </form>
+    {{/each}}
+
+  </body>
+</html>
